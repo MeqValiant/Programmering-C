@@ -1,6 +1,3 @@
-# Programmering-C
-This is random school bullshit
-
 # Programmering C
 Her samler jeg mine opgaver fra Programmering C.
 
