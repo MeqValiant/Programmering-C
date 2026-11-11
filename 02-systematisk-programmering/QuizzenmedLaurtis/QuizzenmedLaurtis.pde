@@ -1,4 +1,7 @@
-
+int Start;
+int Indstillinger;
+int Afslut;
+int tilstand = Start;
 
 
 void setup() {
@@ -55,5 +58,10 @@ void Slut(){
 }
 
 void mouseClicked(){
-  
+  //Lukker knappen
+  if(tilstand==Start && mouseX<400 && mouseX>200){
+    if(mouseY<365 && mouseY>325){
+      exit();
+    }
+  }
 }
