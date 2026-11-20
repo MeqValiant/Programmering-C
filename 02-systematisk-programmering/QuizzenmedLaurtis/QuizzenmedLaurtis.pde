@@ -1,29 +1,42 @@
-int Start;
-int Indstillinger;
-int Afslut;
+int Start = 0;
+int Spørgsmål = 1;
+int Indstillinger = 2;
+int Slut = 3;
 int tilstand = Start;
+int svær = 5;
+int nem = 4;
+int sværhedsgrad = nem;
 
+color cb1 = color(0, 1, 51);
+color cb2 = color(1, 50, 32);
 
 void setup() {
   size(600, 400);
-
-//Baggrundsfarve
-  color colorbackground1 = color(0, 1, 51);
-  color colorbackground2 = color(1, 50, 32);
-
-  for (int x = 0; x < width; x++) {
-    float coloramount = map(x, 0, width, 0, 1);
-
-    stroke(lerpColor(colorbackground1, colorbackground2, coloramount));
-    line(x, 0, x, height);
-  }
 }
 
 void draw(){
- Start();
+ if(tilstand==Start){
+   Start();
+ } else
+ if(tilstand==Indstillinger){
+   Indstillinger();
+ } else
+ if(tilstand==Spørgsmål){
+   Spørgsmål();
+ } else
+ if(tilstand==Slut){
+   Slut();
+ }
 }
 
 void Start(){
+  //Baggrundsfarve
+  for (int x = 0; x < width; x++) {
+    float ca = map(x, 0, width, 0, 1);
+
+    stroke(lerpColor(cb1, cb2, ca));
+    line(x, 0, x, height);
+  }
   //Overskrift
   textAlign(CENTER,CENTER);
   textSize(50);
@@ -46,7 +59,44 @@ void Start(){
   text("Indstillinger",width/2,270);
   text("Afslut",width/2,345);
   
+}
+
+void Indstillinger(){
+  //Baggrundsfarve
+  for (int x = 0; x < width; x++) {
+    float ca = map(x, 0, width, 0, 1);
+
+    stroke(lerpColor(cb1, cb2, ca));
+    line(x, 0, x, height);
+  }
+  //Overskrift
+  textAlign(CENTER,CENTER);
+  textSize(60);
+  fill(200);
+  text("Indstillinger",width/2,100);
   
+  //Retur kasse
+  fill(175,0,0);
+  rect(width/2-100,325,200,40,12);
+  //Nem kasse
+  if(sværhedsgrad==nem){
+  fill(0, 175, 0);
+  } else if(sværhedsgrad==svær){
+    fill(175,0,0);
+  }
+  rect(width/2-100,250,200,40,12);
+  //Svær kasse
+  if(sværhedsgrad==nem){
+  fill(175,0,0);
+  } else if(sværhedsgrad==svær){
+    fill(0,175,0);
+  }
+  rect(width/2-100,175,200,40,12);
+  fill(0);
+  textSize(30);
+  text("Svær",width/2,195);
+  text("Nem",width/2,270);
+  text("Retur",width/2,345);
 }
 
 void Spørgsmål(){
@@ -54,12 +104,52 @@ void Spørgsmål(){
 }
 
 void Slut(){
-  
+  //Overskrift
+  textAlign(CENTER,CENTER);
+  textSize(80);
+  fill(255);
+  text("Resultat af Quiz",width/2,100);
+  //Kasse for Retur
+  fill(150,0,0);
+  rect(width/2-100,325,200,40,12);
+  textSize(26);
+  fill(0);
+  text("Tilbage til Start",width/2,345);
 }
 
 void mouseClicked(){
   //Lukker knappen
   if(tilstand==Start && mouseX<400 && mouseX>200){
+    if(mouseY<365 && mouseY>325){
+      exit();
+    }
+  }
+  if(tilstand==Start && mouseX<400 && mouseX>200){
+    if(mouseY<290 && mouseY>250){
+      tilstand = Indstillinger;
+    }
+  }
+  if(tilstand==Start && mouseX<400 && mouseX>200){
+    if(mouseY<215 && mouseY>175){
+      tilstand = Spørgsmål;
+    }
+  }
+  if(tilstand==Indstillinger && mouseX<400 && mouseX>200){
+    if(mouseY<215 && mouseY>175){
+      sværhedsgrad = svær;
+    }
+  }
+  if(tilstand==Indstillinger && mouseX<400 && mouseX>200){
+    if(mouseY<290 && mouseY>250){
+      sværhedsgrad = nem;
+    }
+  }
+  if(tilstand==Indstillinger && mouseX<400 && mouseX>200){
+    if(mouseY<365 && mouseY>325){
+      tilstand = Start;
+    }
+  }
+  if(tilstand==Slut && mouseX<400 && mouseX>200){
     if(mouseY<365 && mouseY>325){
       exit();
     }
