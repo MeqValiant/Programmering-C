@@ -2,10 +2,12 @@ int Start = 0;
 int Spørgsmål = 1;
 int Indstillinger = 2;
 int Slut = 3;
-int tilstand = Start;
+int tilstand = Slut;
 int svær = 5;
 int nem = 4;
 int sværhedsgrad = nem;
+int resultat = 0;
+int checkfærdig = 0;
 
 color cb1 = color(0, 1, 51);
 color cb2 = color(1, 50, 32);
@@ -30,6 +32,7 @@ void draw(){
 }
 
 void Start(){
+  resultat = 0;
   //Baggrundsfarve
   for (int x = 0; x < width; x++) {
     float ca = map(x, 0, width, 0, 1);
@@ -59,6 +62,12 @@ void Start(){
   text("Indstillinger",width/2,270);
   text("Afslut",width/2,345);
   
+  if(checkfærdig == 1){
+    fill(200);
+    textSize(20);
+    text("Tidligere resultat",510,325);
+   text(resultat+"/5", 510, 350);
+  }
 }
 
 void Indstillinger(){
@@ -104,10 +113,17 @@ void Spørgsmål(){
 }
 
 void Slut(){
+  //Baggrundsfarve
+  for (int x = 0; x < width; x++) {
+    float ca = map(x, 0, width, 0, 1);
+
+    stroke(lerpColor(cb1, cb2, ca));
+    line(x, 0, x, height);
+  }
   //Overskrift
   textAlign(CENTER,CENTER);
   textSize(80);
-  fill(255);
+  fill(200);
   text("Resultat af Quiz",width/2,100);
   //Kasse for Retur
   fill(150,0,0);
@@ -115,6 +131,11 @@ void Slut(){
   textSize(26);
   fill(0);
   text("Tilbage til Start",width/2,345);
+  
+  textAlign(CENTER,CENTER);
+  textSize(100);
+  fill(200);
+  text(resultat+"/5",width/2,220);
 }
 
 void mouseClicked(){
@@ -151,7 +172,8 @@ void mouseClicked(){
   }
   if(tilstand==Slut && mouseX<400 && mouseX>200){
     if(mouseY<365 && mouseY>325){
-      exit();
+      tilstand = Start;
+      checkfærdig = 1;
     }
   }
 }
