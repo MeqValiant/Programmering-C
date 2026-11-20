@@ -2,7 +2,11 @@ int Start = 0;
 int Spørgsmål = 1;
 int Indstillinger = 2;
 int Slut = 3;
-int tilstand = Slut;
+int Spørgsmål2 = 7;
+int Spørgsmål3 = 8;
+int Spørgsmål4 = 9;
+int Spørgsmål5 = 10;
+int tilstand = Start;
 int svær = 5;
 int nem = 4;
 int sværhedsgrad = nem;
@@ -32,7 +36,6 @@ void draw(){
 }
 
 void Start(){
-  resultat = 0;
   //Baggrundsfarve
   for (int x = 0; x < width; x++) {
     float ca = map(x, 0, width, 0, 1);
@@ -150,11 +153,6 @@ void mouseClicked(){
       tilstand = Indstillinger;
     }
   }
-  if(tilstand==Start && mouseX<400 && mouseX>200){
-    if(mouseY<215 && mouseY>175){
-      tilstand = Spørgsmål;
-    }
-  }
   if(tilstand==Indstillinger && mouseX<400 && mouseX>200){
     if(mouseY<215 && mouseY>175){
       sværhedsgrad = svær;
@@ -176,4 +174,100 @@ void mouseClicked(){
       checkfærdig = 1;
     }
   }
+  textSize(50);
+   if(tilstand==Start && mouseX<400 && mouseX>200 && mouseY>175 && mouseY<215){
+    tilstand=Spørgsmål;
+    resultat = 0;
+    Spørgsmål("Hvilken form har en rect()","Firkant","Cirkel");
+    }
+     if(tilstand==Spørgsmål5){
+      if(mouseX<300 && mouseY>300){
+       tilstand=Slut;
+       Slut();
+     } else if(mouseX>300 && mouseY>300){
+       resultat=resultat+1;
+       tilstand=Slut;
+       Slut();
+     } else if(mouseX>15 && mouseX<65 && mouseY>15 && mouseY<65){
+       tilstand=Spørgsmål4;
+     }
+   }
+   if(tilstand==Spørgsmål4){
+      if(mouseX<300 && mouseY>300){
+        resultat=resultat+1;
+       tilstand=Spørgsmål5;
+       textSize(30);
+       Spørgsmål("Hvad er en variabel skrevet uden for et scope?","local","Global");
+     } else if(mouseX>300 && mouseY>300){
+       tilstand=Spørgsmål5;
+       Spørgsmål("Hvad er en variabel skrevet uden for et scope?","local","Global");
+     } else if(mouseX>15 && mouseX<65 && mouseY>15 && mouseY<65){
+       tilstand=Spørgsmål3;
+     }
+   }
+   if(tilstand==Spørgsmål3){
+      if(mouseX<300 && mouseY>300){
+        resultat=resultat+1;
+       tilstand=Spørgsmål4;
+       textSize(43);
+        Spørgsmål("Hvilket funktion danner et loop?","for()","if()");
+     } else if(mouseX>300 && mouseY>300){
+       tilstand=Spørgsmål4;
+        Spørgsmål("Hvilket funktion danner et loop?","for()","if()");
+     } else if(mouseX>15 && mouseX<65 && mouseY>15 && mouseY<65){
+       tilstand=Spørgsmål2;
+     }
+   }
+    if(tilstand==Spørgsmål2){
+      if(mouseX<300 && mouseY>300){
+       tilstand=Spørgsmål3;
+     } else if(mouseX>300 && mouseY>300){
+       tilstand=Spørgsmål3;
+       resultat=resultat+1;
+       Spørgsmål("Hvilken farve er fill(0,200,0)?","Grøn", "rød");
+     } else if(mouseX>15 && mouseX<65 && mouseY>15 && mouseY<65){
+       tilstand=Spørgsmål;
+       Spørgsmål("Hvilken farve er fill(0,200,0)?","Grøn", "rød");
+     }
+   }
+    if(tilstand==Spørgsmål){
+     if(mouseX<300 && mouseY>300){
+       tilstand=Spørgsmål2;
+       resultat=resultat+1;
+         Spørgsmål("Kan en int have komma-tal?","ja", "nej");
+     } else if(mouseX>300 && mouseY>300){
+       tilstand=Spørgsmål2;
+         Spørgsmål("Kan en int have komma-tal?","ja", "nej");
+     } else if(mouseX>15 && mouseX<65 && mouseY>15 && mouseY<65){
+       tilstand=Start;
+     }
+   }
+}
+
+void Spørgsmål(String overskrift, String svar1, String svar2){
+  background(0);
+  //Baggrundsfarve
+  for (int x = 0; x < width; x++) {
+    float ca = map(x, 0, width, 0, 1);
+
+    stroke(lerpColor(cb1, cb2, ca));
+    line(x, 0, x, height);
+  }
+  fill(255);
+  rect(300,300,300,300);
+  fill(200);
+  rect(0,300,300,300);
+  fill(250);
+  textAlign(CENTER,CENTER);
+  text(overskrift,width/2,100);
+  textSize(20);
+  fill(0);
+  text(svar1,150,350);
+   text(svar2,450,350);
+ fill(200,0,0);
+ rect(15,15,50,50,12);
+ fill(0);
+textSize(50);
+textAlign(CENTER,CENTER);
+text("←", 40, 35);
 }
